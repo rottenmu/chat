@@ -1,5 +1,6 @@
 package com.open.im.remoting.netty.codec;
 
+import com.open.im.remoting.enums.RequestType;
 import com.open.im.remoting.handler.MessageHandler;
 
 import java.util.HashMap;
@@ -14,8 +15,8 @@ import java.util.Map;
  * @version 1.0
  */
 
-public class ChatRedirectToUserRequest implements Message{
-    public static final String TYPE = "CHAT_REDIRECT_TO_USER_REQUEST";
+public class ForwardMessageRequest implements Message{
+    public static final String TYPE = RequestType.FORWRD_REQUEST.name();
 
     private String msgId;
     private String content;

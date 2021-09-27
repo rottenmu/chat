@@ -17,9 +17,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class NettyRemoteBClientApp {
 
     public static void main(String[] args) {
-        NettyRemotingClient nettyRemotingClient = new NettyRemotingClient();
-        nettyRemotingClient.start();
-        System.setProperty("user","b");
         System.setProperty("spring.profiles.active", "bclient");
         SpringApplication.run(NettyRemoteBClientApp.class, args);
     }

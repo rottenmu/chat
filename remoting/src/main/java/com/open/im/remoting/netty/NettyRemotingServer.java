@@ -67,7 +67,7 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ch.pipeline()
-                                .addLast(new IdleStateHandler(11, 0, 0, TimeUnit.SECONDS))
+                                .addLast(new IdleStateHandler(31, 0, 0, TimeUnit.SECONDS))
                                 .addLast(new MessageDecoder())
                                 .addLast(new MessageEncoder())
                                 .addLast(new MessageDispatcher())
@@ -105,7 +105,7 @@ public class NettyRemotingServer extends AbstractNettyRemoting implements Remoti
 
         @Override
         public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-           NettyConnectionHolder.remove(((NioSocketChannel) ctx.channel()));
+           //NettyConnectionHolder.remove(((NioSocketChannel) ctx.channel()));
             super.channelUnregistered(ctx);
         }
 

@@ -1,8 +1,8 @@
-package com.open.im.broker.config;
+package com.open.im.application.config;
 
-import com.open.im.remoting.netty.NettyRemotingServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * <p>Title: OpenIm</p>
@@ -14,7 +14,10 @@ import org.springframework.context.annotation.Configuration;
  */
 
 @Configuration
-public class BrokerConfig {
+public class WebClientConfig {
 
-
+    @Bean
+    public RestTemplate webClient(){
+        return new RestTemplate();
+    }
 }

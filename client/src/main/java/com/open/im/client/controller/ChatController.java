@@ -26,7 +26,6 @@ public class ChatController {
 
     @PostMapping(value = "/login")
     public String login( @RequestBody DefaultMessage defaultMessage){
-
         nettyRemotingClient.sendMessage(defaultMessage);
 //        NioSocketChannel nioSocketChannel = NettyConnectionHolder.getNioSocketChannel(user);
 //        nioSocketChannel.writeAndFlush(defaultMessage);
@@ -36,11 +35,7 @@ public class ChatController {
 
     @PostMapping(value = "/send/{user}")
     public String send(@PathVariable String user, @RequestBody DefaultMessage defaultMessage){
-
         nettyRemotingClient.sendMessage(defaultMessage);
-//        NioSocketChannel nioSocketChannel = NettyConnectionHolder.getNioSocketChannel(user);
-//        nioSocketChannel.writeAndFlush(defaultMessage);
-        //  NettyConnectionHolder.send(user, defaultMessage);
         return "SUCCESS";
     }
 

@@ -21,11 +21,12 @@ import java.util.concurrent.ConcurrentMap;
 public abstract class AbstractNettyRemoting {
 
     public AbstractNettyRemoting(){
-        ConcurrentMap<String, MessageHandler> handlers = new ConcurrentHashMap<>();
+        ConcurrentMap<String, MessageHandler> handlers = new ConcurrentHashMap<String, MessageHandler>();
         handlers.put(HeartbeatRequest.TYPE, new HeartBeatMessageHandler());
         handlers.put(HeartbeatResponse.TYPE, new HeartbeatResponseHandler());
         handlers.put(OneToOneMessage.TYPE,  new OneToOneSendMessageHandler());
         handlers.put(ChatSendResponse.TYPE, new ChatSendResponseHandler());
+        handlers.put(ForwardMessageRequest.TYPE, new ForwardMessageHandler());
         handlers.put(LoginMessage.TYPE, new LoginMessageHandler());
         MessageHandlerContext.setHandlers(handlers);
     }

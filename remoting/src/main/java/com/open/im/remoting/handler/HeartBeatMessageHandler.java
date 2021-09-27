@@ -1,6 +1,5 @@
 package com.open.im.remoting.handler;
 
-import com.open.im.remoting.context.NettyConnectionHolder;
 import com.open.im.remoting.enums.RequestType;
 import com.open.im.remoting.netty.codec.DefaultMessage;
 import com.open.im.remoting.netty.codec.HeartbeatRequest;

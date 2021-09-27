@@ -19,8 +19,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 
 public class MessageHandlerContext {
-    private static ConcurrentMap<String, MessageHandler> handlers = new ConcurrentHashMap<>();
-    private static ConcurrentMap<Class<MessageHandler>,Class<Message>> messageClasses = new ConcurrentHashMap<>();
+    private static ConcurrentMap<String, MessageHandler> handlers = new ConcurrentHashMap<String, MessageHandler>();
 
     private MessageHandlerContext(){}
 

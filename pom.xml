@@ -3,21 +3,26 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.open.im</groupId>
-    <artifactId>OpenIm</artifactId>
+    <artifactId>chat</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
+
     <modules>
         <module>broker</module>
         <module>client</module>
         <module>commons</module>
-        <module>namesrv</module>
         <module>remoting</module>
+        <module>application</module>
+        <module>java-client-sdk</module>
     </modules>
-    <name>OpenIm</name>
-    <description>Demo project for Spring Boot</description>
+
+    <name>openChat</name>
+    <description>openChat project for Spring Boot</description>
 
     <properties>
         <java.version>1.8</java.version>
+        <httpclient4-fluent.version>4.5.2</httpclient4-fluent.version>
+        <swagger.version>2.9.2</swagger.version>
         <zookeeper.curator.version>4.3.0</zookeeper.curator.version>
         <netty.version>4.1.50.Final</netty.version>
         <fastjson.version>1.2.76</fastjson.version>
@@ -51,6 +56,19 @@
                 <version>${netty.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient4-fluent.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5-fluent -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>fluent-hc</artifactId>
+                <version>${httpclient4-fluent.version}</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -74,6 +92,13 @@
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-recipes</artifactId>
+                <version>${zookeeper.curator.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-x-discovery -->
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-x-discovery</artifactId>
                 <version>${zookeeper.curator.version}</version>
             </dependency>
 
@@ -103,24 +128,17 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-framework -->
+            <!-- swagger -->
             <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-framework</artifactId>
-                <version>${curator-framework.version}</version>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-recipes -->
             <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-recipes</artifactId>
-                <version>${curator-framework.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-x-discovery -->
-            <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-x-discovery</artifactId>
-                <version>${curator-framework.version}</version>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

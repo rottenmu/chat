@@ -1,16 +1,19 @@
 package com.open.im.broker;
 
 import com.alibaba.fastjson.JSON;
-import com.open.im.commons.spring.SpringContextUtils;
-import com.open.im.remoting.enums.RequestType;
-import com.open.im.remoting.netty.codec.HeartbeatRequest;
+import com.open.im.broker.cluster.Instance;
+import com.open.im.broker.cluster.ZookeeperDiscovery;
+import com.open.im.broker.utils.ClientUtils;
 import com.open.im.remoting.netty.codec.LoginMessage;
 import com.open.im.remoting.netty.codec.OneToOneMessage;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.x.discovery.ServiceInstance;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,13 +26,25 @@ import java.util.Map;
  * @version 1.0
  */
 
-@SpringBootTest
+@SpringBootTest(classes = {NettyRemoteAServerApp.class})
 public class NettyRemoteBServerAppTest {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
+    private CuratorFramework curatorFramework;
+
+    @Autowired
+    private ZookeeperDiscovery zookeeperDiscovery;
+
     @Test
     void contextLoad(){
+        try {
+            Collection<ServiceInstance<Instance>> serviceInstances = zookeeperDiscovery.queryForInstances("netty-server");
+            System.out.println(serviceInstances);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        NettyConnectionManager bean2 = SpringContextUtils.getApplicationContext().getBean(NettyConnectionManager.class);
 //        MessageHandlerInitBeanProcessor bean1 = applicationContext.getBean(MessageHandlerInitBeanProcessor.class);
 //        NettyConnectionManager bean = applicationContext.getBean(NettyConnectionManager.class);
@@ -46,6 +61,7 @@ public class NettyRemoteBServerAppTest {
     }
 
     public static void main(String[] args) {
+        boolean reachable = ClientUtils.isReachable("192.168.58.1", 22002, 30000);
         Map<String,String> param = new HashMap<String, String>();
         param.put("type", "REQUEST");
         OneToOneMessage oneToOneMessage = new OneToOneMessage();

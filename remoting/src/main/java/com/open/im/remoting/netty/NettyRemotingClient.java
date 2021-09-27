@@ -20,6 +20,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.SocketAddress;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -38,8 +39,15 @@ public class NettyRemotingClient extends AbstractNettyRemoting implements Remoti
     private EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
     private NettyClientHandler nettyClientHandler;
     private final Integer RECONNECT_SECONDS = 3;
-    private final String HOST = "127.0.0.1";
-    private final Integer PORT = 12002;
+    private String host;
+    private int port;
+
+    public NettyRemotingClient(String host, int port){
+        this.host = host;
+        this.port = port;
+
+        start();
+    }
 
     private void prepareSharableHandlers(){
         nettyClientHandler = new NettyClientHandler();
@@ -59,7 +67,7 @@ public class NettyRemotingClient extends AbstractNettyRemoting implements Remoti
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
                         ch.pipeline()
-                                .addLast(new IdleStateHandler(0,10, 0 ,TimeUnit.SECONDS))
+                                .addLast(new IdleStateHandler(0,30, 0 ,TimeUnit.SECONDS))
                                 .addLast(new MessageEncoder())
                                 .addLast(new MessageDecoder())
                                 .addLast(new MessageDispatcher())
@@ -69,16 +77,16 @@ public class NettyRemotingClient extends AbstractNettyRemoting implements Remoti
 
 
         try {
-            bootstrap.connect(HOST, PORT).sync().addListener(new ChannelFutureListener() {
+            bootstrap.connect(this.host, this.port).sync().addListener(new ChannelFutureListener() {
                     @Override
                     public void operationComplete(ChannelFuture future){
                         if (!future.isSuccess()) {
-                            logger.error("[start netty client 服务器[{}:{}]失败]",HOST, PORT);
+                            logger.error("[start netty client 服务器[{}:{}]失败]",host, port);
                             reConnect();
                             return;
                         }
                         channel = future.channel();
-                        logger.info("[start][netty client 服务器 [{}:{}]] 连接成功",HOST, PORT);
+                        logger.info("[start][netty client 服务器 [{}:{}]] 连接成功",host, port);
                     }
                 });
         } catch (InterruptedException e) {

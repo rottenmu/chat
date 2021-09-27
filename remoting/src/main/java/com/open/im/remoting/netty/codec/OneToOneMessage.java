@@ -1,5 +1,7 @@
 package com.open.im.remoting.netty.codec;
 
+import com.open.im.remoting.enums.RequestType;
+
 /**
  * <p>Title: OpenIm</p>
  * <p>Description: OpenIm</p>
@@ -10,7 +12,7 @@ package com.open.im.remoting.netty.codec;
  */
 
 public class OneToOneMessage implements Message{
-    public static final String TYPE = "CHAT_SEND_TO_ONE_REQUEST";
+    public static final String TYPE = RequestType.CHAT_SEND_TO_ONE_REQUEST.name();
 
     private String fromUser;
     private String toUser;
